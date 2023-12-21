@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--Para el cardView normal (sin presionar)-->
+    <item android:drawable="@color/gray" android:state_pressed="false"/>
+
+    <!--Para el cardView normal (cuando esté presionado)-->
+    <item android:drawable="@color/darker_gray" android:state_pressed="true"/>
+
+    <!--Añadir al cardView para que funcione:
+    android:background="@drawable/cardview_selector"
+    android:clickable="true"
+    -->
+
+</selector>
