@@ -53,5 +53,6 @@ class EditarActivity : AppCompatActivity(), OnClickListener {
             R.id.btnCancelar -> {
                 finish()
             }
-        }    }
+        }
+    }
 }

@@ -50,8 +50,10 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     //Para la librería Picasso
     implementation("com.squareup.picasso:picasso:2.71828")
+    //Para la librería Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
     //Para el SplashScreen
-    //TODO
+    implementation("androidx.core:core-splashscreen:1.0.1")
     //Para GoogleMaps
     //TODO
 }

@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
+    <!--Para insertar un icono en el menú. Por defecto salen los 3 puntos negros-->
     <item
-        android:id="@+id/recargar"
-        android:title="Recargar"
-        />
-
-    <item
-        android:id="@+id/limpiar"
-        android:title="Limpiar"
-        />
-
+        android:id="@+id/menuOpciones"
+        android:icon="@drawable/baseline_more_vert_24"
+        android:title=""
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/limpiar"
+                android:title="Limpiar"
+                />
+            <item
+                android:id="@+id/recargar"
+                android:title="Recargar"
+                />
+        </menu>
+    </item>
 </menu>
-
 <!--Importante quitar los NoActionBar de los themes-->
