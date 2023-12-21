@@ -13,10 +13,11 @@ import android.widget.EditText
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.ejercicio_tema_8.R
 import com.example.ejercicio_tema_8.databinding.ActivityLoginBinding
 
-class Login : AppCompatActivity(), View.OnClickListener {
+class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var prefs: SharedPreferences
 
@@ -27,9 +28,13 @@ class Login : AppCompatActivity(), View.OnClickListener {
     private lateinit var btnLogin: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setContentView(binding.root)
+        Thread.sleep(2000)
+        splashScreen.setKeepOnScreenCondition{false}
 
         tvInicioSesion = binding.tvInicioSesion
         etEmail = binding.etEmail

@@ -6,9 +6,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/spain"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/spain"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ejercicio_Tema_8"
         tools:targetApi="31">
@@ -19,7 +19,7 @@
             android:name=".activities.EditarActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.Login"
+            android:name=".activities.LoginActivity"
             android:exported="true"> <!--Cambio el MainActivity por el Login para comenzar desde esta pantalla-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -15,11 +15,18 @@
         <item name="titleTextColor">@android:color/white</item>
         <!-- Establece el color de los iconos -->
         <item name="android:colorControlNormal">@android:color/white</item>
-
     </style>
 
     <style name="Theme.Ejercicio_Tema_8" parent="Base.Theme.Ejercicio_Tema_8">
         <!-- Aplica el nuevo estilo de la Toolbar -->
         <item name="toolbarStyle">@style/ToolbarStyle</item>
+    </style>
+
+    <!-- Para el SplashScreen -->
+    <style name = "Theme.App.Starting" parent="Base.Theme.Ejercicio_Tema_8">
+        <item name = "windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/spain</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.Ejercicio_Tema_8</item>
     </style>
 </resources>

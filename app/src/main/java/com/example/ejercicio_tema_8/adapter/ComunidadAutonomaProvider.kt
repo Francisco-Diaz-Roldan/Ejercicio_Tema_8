@@ -17,7 +17,7 @@ class ComunidadAutonomaProvider {
             ComunidadAutonoma(7, "Castilla La Mancha", R.drawable.castilla_la_mancha),
             ComunidadAutonoma(8, "Castilla y León", R.drawable.castilla_y_leon),
             ComunidadAutonoma(9, "Comunidad de Madrid", R.drawable.madrid),
-            ComunidadAutonoma(10, "Comunidad Foral de Navarra", R.drawable.navarra),
+            ComunidadAutonoma(10, "Comunidad de Navarra", R.drawable.navarra),
             ComunidadAutonoma(11, "Comunidad Valenciana", R.drawable.valencia),
             ComunidadAutonoma(12, "Extremadura", R.drawable.extremadura),
             ComunidadAutonoma(13, "Galicia", R.drawable.galicia),
