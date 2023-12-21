@@ -11,6 +11,10 @@
         app:showAsAction="ifRoom">
         <menu>
             <item
+                android:id="@+id/logOut"
+                android:title="LogOut"
+                />
+            <item
                 android:id="@+id/limpiar"
                 android:title="Limpiar"
                 />
