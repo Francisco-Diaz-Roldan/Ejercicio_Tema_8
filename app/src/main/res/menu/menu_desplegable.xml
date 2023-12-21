@@ -2,10 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/addComunidadAutonoma"
-        android:title="Añadir Comunidad Autonoma"
-        />
+
     <item
         android:id="@+id/recargar"
         android:title="Recargar"
