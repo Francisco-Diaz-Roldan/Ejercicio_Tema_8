@@ -27,7 +27,7 @@ class ComunidadAutonomaViewHolder(view: View): RecyclerView.ViewHolder(view), Vi
         menuInfo: ContextMenu.ContextMenuInfo?
     ) {
         menu!!.setHeaderTitle(comunidad.nombre)
-        menu.add(this.adapterPosition, 0, 0, "ELIMINAR")
-        menu.add(this.adapterPosition, 1, 1, "EDITAR")
+        menu.add(this.adapterPosition, 0, 0, "Eliminar")
+        menu.add(this.adapterPosition, 1, 1, "Editar")
     }
 }

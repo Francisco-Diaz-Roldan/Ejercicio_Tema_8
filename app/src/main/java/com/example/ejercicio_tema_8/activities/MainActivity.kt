@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,8 +44,8 @@ class MainActivity : AppCompatActivity() {
             }
 
         intentLaunch = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result: ActivityResult ->
+            ActivityResultContracts.StartActivityForResult()) {
+                result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 nombreComunidad = result.data?.extras?.getString("nombre").toString()
                 id = result.data?.extras?.getInt("id") as Int
@@ -56,6 +58,12 @@ class MainActivity : AppCompatActivity() {
                 binding.rvComunidades.adapter = adapter
             }
         }
+
+        this.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                finish()
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

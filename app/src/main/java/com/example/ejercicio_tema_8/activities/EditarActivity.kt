@@ -13,7 +13,7 @@ import com.example.ejercicio_tema_8.databinding.ActivityEditarBinding
 
 class EditarActivity : AppCompatActivity(), OnClickListener {
     private lateinit var binding: ActivityEditarBinding
-    private lateinit var btnCambiar: Button
+    private lateinit var btnEditar: Button
     private lateinit var btnCancelar: Button
     private lateinit var infoNombre: EditText
     private lateinit var infoImagen: ImageView
@@ -25,8 +25,8 @@ class EditarActivity : AppCompatActivity(), OnClickListener {
 
         val nombre = intent.getStringExtra("nombreComunidad")
         val imagen = intent.getIntExtra("imagen", 0)
-        btnCambiar = binding.btnEditar
-        btnCambiar.setOnClickListener(this)
+        btnEditar = binding.btnEditar
+        btnEditar.setOnClickListener(this)
         btnCancelar = binding.btnCancelar
         btnCancelar.setOnClickListener(this)
         infoNombre = binding.etNombre
