@@ -1,6 +1,5 @@
 package com.example.ejercicio_tema_8.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -8,11 +7,8 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Switch
-import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.ejercicio_tema_8.R
 import com.example.ejercicio_tema_8.databinding.ActivityLoginBinding
@@ -21,28 +17,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var prefs: SharedPreferences
 
-    private lateinit var tvInicioSesion: TextView
-    private lateinit var etEmail: EditText
-    private lateinit var etPassword: EditText
-    private lateinit var swRecordarUsuario: Switch
-    private lateinit var btnLogin: Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setContentView(binding.root)
-        Thread.sleep(2000)
+
+        Thread.sleep(500)
         splashScreen.setKeepOnScreenCondition{false}
-
-        tvInicioSesion = binding.tvInicioSesion
-        etEmail = binding.etEmail
-        etPassword = binding.etPassword
-        swRecordarUsuario = binding.swRecordarUsuario
-        btnLogin = binding.btnLogin
-        btnLogin.setOnClickListener(this)
-
         prefs = getSharedPreferences("app", MODE_PRIVATE)
         establecerValoresSiExisten()
         binding.btnLogin.setOnClickListener{
@@ -51,6 +33,35 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             if(login(email, password)) goToMain()
             guardarPreferencias(email, password)
         }
+
+        binding.motionLayout.setTransitionListener(object: MotionLayout.TransitionListener{
+            override fun onTransitionStarted(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int
+            ) {
+            }
+
+            override fun onTransitionChange(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int,
+                progress: Float
+            ) {
+            }
+
+            override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+                binding.motionLayout.visibility = View.GONE
+            }
+
+            override fun onTransitionTrigger(
+                motionLayout: MotionLayout?,
+                triggerId: Int,
+                positive: Boolean,
+                progress: Float
+            ) {
+            }
+        })
     }
 
     private fun login(email: String, password: String): Boolean {
@@ -78,7 +89,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun guardarPreferencias(email: String, password: String){
         val editor = prefs!!.edit()
-        if (swRecordarUsuario!!.isChecked){
+        if (binding.swRecordarUsuario.isChecked){
             editor.putString("email", email)
             editor.putString("password", password)
             editor.putBoolean("recordar", true)
@@ -90,7 +101,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    @SuppressLint("SuspiciousIndentation")
     private fun establecerValoresSiExisten() {
     val email = prefs.getString("email", "")
     val password = prefs.getString("password", "")
@@ -107,7 +117,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun passwordValida(password:String) : Boolean{
-        return  !TextUtils.isEmpty(password) && password.length > 5
+        return  !TextUtils.isEmpty(password) && password.length >= 5
     }
 
     override fun onClick(v: View?) {
