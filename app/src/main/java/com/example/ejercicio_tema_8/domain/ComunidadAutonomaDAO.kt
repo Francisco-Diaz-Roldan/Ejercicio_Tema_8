@@ -31,7 +31,7 @@ class ComunidadAutonomaDAO {
 
     fun borrarDeBBDD(context: Context?, nombre: String) {
         val db = DBOpenHelper.getInstance(context)!!.writableDatabase
-        db.execSQL("UPDATE comunidades " + "SET estado='eliminado' " + "WHERE nombre='$nombre';")
+        db.execSQL("UPDATE comunidades SET estado='eliminado' WHERE nombre='$nombre';")
         db.close()
     }
 

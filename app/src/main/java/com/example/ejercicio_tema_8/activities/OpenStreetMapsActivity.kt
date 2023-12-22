@@ -1,12 +1,10 @@
 package com.example.ejercicio_tema_8.activities
 
 import android.content.Context
-import org.osmdroid.config.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.ejercicio_tema_8.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.ejercicio_tema_8.databinding.ActivityOpenStreetMapsBinding
-
+import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
@@ -25,10 +23,6 @@ class OpenStreetMapsActivity : AppCompatActivity() {
         binding = ActivityOpenStreetMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //TOOD modificar valores a partir de aqui
-        val comunidadNombre = intent.getStringExtra("comunidadNombre")
-        val comunidadHabitantes = intent.getIntExtra("comunidadHabitantes", 0)
-        val comunidadCapital = intent.getStringExtra("comunidadCapital")
         val comunidadLatitud = intent.getDoubleExtra("comunidadLatitud", 0.0)
         val comunidadLongitud = intent.getDoubleExtra("comunidadLongitud", 0.0)
 

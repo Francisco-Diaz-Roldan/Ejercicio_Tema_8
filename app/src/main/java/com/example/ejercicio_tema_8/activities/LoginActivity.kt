@@ -1,6 +1,5 @@
 package com.example.ejercicio_tema_8.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -102,7 +101,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    @SuppressLint("SuspiciousIndentation")
     private fun establecerValoresSiExisten() {
     val email = prefs.getString("email", "")
     val password = prefs.getString("password", "")
