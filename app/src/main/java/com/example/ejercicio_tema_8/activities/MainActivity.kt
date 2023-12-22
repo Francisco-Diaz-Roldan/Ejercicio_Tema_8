@@ -2,17 +2,16 @@ package com.example.ejercicio_tema_8.activities
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ejercicio_tema_8.R
 import com.example.ejercicio_tema_8.adapter.ComunidadAutonomaAdapter
@@ -152,6 +151,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun onItemSelected(comunidadAutonoma: ComunidadAutonoma) {
         Toast.makeText(this, "Yo soy de ${comunidadAutonoma.nombre}", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(this, OpenStreetMapsActivity::class.java)
+
+        intent.putExtra("comunidadNombre", comunidadAutonoma.nombre)
+        intent.putExtra("comunidadHabitantes", comunidadAutonoma.habitantes)
+        intent.putExtra("comunidadCapital", comunidadAutonoma.capital)
+        intent.putExtra("comunidadLatitud", comunidadAutonoma.latitud)
+        intent.putExtra("comunidadLongitud", comunidadAutonoma.longitud)
+
+        // Inicio la actividad OpenStreetMapsActivity
+        startActivity(intent)
     }
 
 }

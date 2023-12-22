@@ -56,4 +56,7 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
     //Para GoogleMaps
     //TODO
+    //Para Street Maps
+    implementation("org.osmdroid:osmdroid-android:6.1.17")
+
 }

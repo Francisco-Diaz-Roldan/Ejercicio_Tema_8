@@ -17,7 +17,9 @@ class ComunidadAutonomaDAO {
             while (c.moveToNext()) {
                 val nueva = ComunidadAutonoma(
                     c.getInt(0), c.getString(1),
-                    c.getInt(2)
+                    c.getInt(2), c.getInt(3),
+                    c.getString(4), c.getDouble(5),
+                    c.getDouble(6), c.getInt(7)
                 )
                 res.add(nueva)
             }
@@ -40,6 +42,11 @@ class ComunidadAutonomaDAO {
         values.put(ComunidadContract.Companion.Entrada.COLUMNA_ID, comunidad.id)
         values.put(ComunidadContract.Companion.Entrada.COLUMNA_NOMBRE, comunidad.nombre)
         values.put(ComunidadContract.Companion.Entrada.COLUMNA_IMAGEN, comunidad.imagen)
+        values.put(ComunidadContract.Companion.Entrada.COLUMNA_HABITANTES, comunidad.habitantes)
+        values.put(ComunidadContract.Companion.Entrada.COLUMNA_CAPITAL, comunidad.capital)
+        values.put(ComunidadContract.Companion.Entrada.COLUMNA_LATITUD, comunidad.latitud)
+        values.put(ComunidadContract.Companion.Entrada.COLUMNA_LONGITUD, comunidad.longitud)
+        values.put(ComunidadContract.Companion.Entrada.COLUMNA_ICONO, comunidad.icono)
         db.update(
             ComunidadContract.Companion.Entrada.NOMBRE_TABLA,
             values,
