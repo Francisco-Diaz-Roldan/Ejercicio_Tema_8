@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Ejercicio_Tema_8</string>
+    <string name="title_activity_google_maps">GoogleMapsActivity</string>
 </resources>
