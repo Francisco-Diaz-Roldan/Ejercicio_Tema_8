@@ -151,16 +151,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun onItemSelected(comunidadAutonoma: ComunidadAutonoma) {
         Toast.makeText(this, "Yo soy de ${comunidadAutonoma.nombre}", Toast.LENGTH_SHORT).show()
+        // Para iniciar la actividad OpenStreetMapsActivity o en GoogleMapsActivity
 
-        val intent = Intent(this, OpenStreetMapsActivity::class.java)
-
+        val intent = Intent(this, GoogleMapsActivity::class.java)
         intent.putExtra("comunidadNombre", comunidadAutonoma.nombre)
         intent.putExtra("comunidadHabitantes", comunidadAutonoma.habitantes)
         intent.putExtra("comunidadCapital", comunidadAutonoma.capital)
         intent.putExtra("comunidadLatitud", comunidadAutonoma.latitud)
         intent.putExtra("comunidadLongitud", comunidadAutonoma.longitud)
-
-        // Inicio la actividad OpenStreetMapsActivity
         startActivity(intent)
     }
 
