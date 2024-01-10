@@ -39,9 +39,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
-        android:text="COMUNIDADES"
+        android:text="@string/comunidades"
         android:textColor="@color/orange"
-        android:textSize="32dp"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -50,46 +50,48 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etEmail"
-        android:layout_marginBottom="16dp"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="128dp"
+        android:layout_marginBottom="16dp"
+        android:autofillHints="emailAddress"
         android:ems="16"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:hint="Email"
         app:helperText="Correo electrónico"
         app:helperTextTextColor="@color/blue"
-        android:autofillHints="emailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etPassword"
-        android:layout_marginBottom="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:ems="16"
-        android:inputType="textPassword"
-        android:hint="Password"
+        android:layout_marginBottom="16dp"
         android:autofillHints="Password"
-        app:helperText="5 caracteres"
+        android:ems="16"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        app:helperText="@string/cinco_caracteres"
         app:helperTextTextColor="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEmail"
-        app:passwordToggleEnabled="true"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        app:passwordToggleEnabled="true">
+
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Switch
@@ -97,13 +99,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:text="Recordar usuario"
+        android:text="@string/recordar_usuario"
+        android:thumbTint="@color/orange"
+        android:trackTint="@color/orange"
         app:layout_constraintEnd_toEndOf="@+id/etPassword"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/etPassword"
         app:layout_constraintTop_toBottomOf="@+id/etPassword"
-        android:thumbTint="@color/orange"
-        android:trackTint="@color/orange"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <Button
@@ -111,8 +113,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="96dp"
-        android:text="Login"
         android:backgroundTint="@color/orange"
+        android:text="@string/login"
         app:layout_constraintEnd_toEndOf="@+id/etPassword"
         app:layout_constraintStart_toStartOf="@+id/etPassword"
         app:layout_constraintTop_toBottomOf="@+id/swRecordarUsuario" />

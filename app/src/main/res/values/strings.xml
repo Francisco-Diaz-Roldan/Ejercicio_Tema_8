@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Ejercicio_Tema_8</string>
     <string name="title_activity_google_maps">GoogleMapsActivity</string>
+    <string name="editar">Editar</string>
+    <string name="c_autonoma">C. Autónoma</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="comunidades">COMUNIDADES</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="cinco_caracteres">5 caracteres</string>
+    <string name="recordar_usuario">Recordar usuario</string>
+    <string name="login">Login</string>
+    <string name="se_trata_de_la_banderaade_la_comunidad_autonoma">Se trata de la banderaade la comunidad autonoma</string>
 </resources>
