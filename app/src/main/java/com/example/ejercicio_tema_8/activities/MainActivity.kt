@@ -1,5 +1,6 @@
 package com.example.ejercicio_tema_8.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.limpiar -> {
@@ -108,19 +110,72 @@ class MainActivity : AppCompatActivity() {
         lateinit var miIntent: Intent
         comunidadSeleccionada = listaComunidades[item.groupId]
         when (item.itemId) {
+            0 -> {
+                val alert = AlertDialog.Builder(this)
+                    .setTitle("Eliminar ${comunidadSeleccionada.nombre}")
+                    .setMessage("¿Estás seguro de que quieres eliminar ${comunidadSeleccionada.nombre}?")
+                    .setNeutralButton("Cerrar", null)
+                    .setPositiveButton("Aceptar") { _, _ ->
+                        display("Se ha eliminado ${comunidadSeleccionada.nombre}")
+                        val updatedList = listaComunidades.toMutableList()
+                        updatedList.remove(comunidadSeleccionada)
+                        listaComunidades = updatedList.toList()
+                        adapter.updateList(listaComunidades)
+                        comunidadDAO.borrarDeBBDD(this, comunidadSeleccionada.nombre)
+                    }
+                    .create()
+                alert.show()
+            }
+            1 -> {
+                miIntent = Intent(this, EditarActivity::class.java)
+                miIntent.putExtra("nombreComunidad", listaComunidades[item.groupId].nombre)
+                miIntent.putExtra("id", item.groupId)
+                miIntent.putExtra("imagen", listaComunidades[item.groupId].imagen)
+                intentLaunch.launch(miIntent)
+            }
+            else -> return super.onContextItemSelected(item)
+        }
+        return true
+    }
+
+
+    private fun display(s: String) {
+        Snackbar.make(binding.root, s, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun onItemSelected(comunidadAutonoma: ComunidadAutonoma) {
+        Toast.makeText(this, "Yo soy de ${comunidadAutonoma.nombre}", Toast.LENGTH_SHORT).show()
+        // Para iniciar la actividad OpenStreetMapsActivity o en GoogleMapsActivity
+
+        val intent = Intent(this, GoogleMapsActivity::class.java)
+        intent.putExtra("comunidadNombre", comunidadAutonoma.nombre)
+        intent.putExtra("comunidadHabitantes", comunidadAutonoma.habitantes)
+        intent.putExtra("comunidadCapital", comunidadAutonoma.capital)
+        intent.putExtra("comunidadLatitud", comunidadAutonoma.latitud)
+        intent.putExtra("comunidadLongitud", comunidadAutonoma.longitud)
+        startActivity(intent)
+    }
+
+}
+
+/*
+override fun onContextItemSelected(item: MenuItem): Boolean {
+        lateinit var miIntent: Intent
+        comunidadSeleccionada = listaComunidades[item.groupId]
+        when (item.itemId) {
 
             0 -> {
                 val alert =
-                    AlertDialog.Builder(this).setTitle("Eliminar ${comunidadSeleccionada.nombre}")
-                        .setMessage(
-                            "¿Estás seguro de que quieres eliminar ${comunidadSeleccionada.nombre}?"
-                        )
-                        .setNeutralButton("Cerrar", null).setPositiveButton("Aceptar") { _, _ ->
+                    AlertDialog.Builder(this)
+                    .setTitle("Eliminar ${comunidadSeleccionada.nombre}")
+                    .setMessage("¿Estás seguro de que quieres eliminar ${comunidadSeleccionada.nombre}?")
+                    .setNeutralButton("Cerrar", null)
+                    .setPositiveButton("Aceptar") { _, _ ->
                             display("Se ha eliminado ${comunidadSeleccionada.nombre}")
 
-                            // Actualiza la lista quitando el elemento
+                            // Actualizo la lista quitando el elemento
                             listaComunidades = listaComunidades.minus(comunidadSeleccionada)
-
+                            adapter.updateList(listaComunidades)
                             binding.rvComunidades.adapter?.notifyItemRemoved(item.groupId)
                             binding.rvComunidades.adapter?.notifyItemRangeChanged(
                                 item.groupId,
@@ -147,22 +202,4 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
-
-    private fun display(s: String) {
-        Snackbar.make(binding.root, s, Snackbar.LENGTH_SHORT).show()
-    }
-
-    private fun onItemSelected(comunidadAutonoma: ComunidadAutonoma) {
-        Toast.makeText(this, "Yo soy de ${comunidadAutonoma.nombre}", Toast.LENGTH_SHORT).show()
-        // Para iniciar la actividad OpenStreetMapsActivity o en GoogleMapsActivity
-
-        val intent = Intent(this, GoogleMapsActivity::class.java)
-        intent.putExtra("comunidadNombre", comunidadAutonoma.nombre)
-        intent.putExtra("comunidadHabitantes", comunidadAutonoma.habitantes)
-        intent.putExtra("comunidadCapital", comunidadAutonoma.capital)
-        intent.putExtra("comunidadLatitud", comunidadAutonoma.latitud)
-        intent.putExtra("comunidadLongitud", comunidadAutonoma.longitud)
-        startActivity(intent)
-    }
-
-}
+*/
