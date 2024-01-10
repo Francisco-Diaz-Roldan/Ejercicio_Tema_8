@@ -44,7 +44,6 @@ android {
 }
 
 dependencies {
-
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")   //Para Material Design
@@ -59,9 +58,7 @@ dependencies {
     //Para el SplashScreen
     implementation("androidx.core:core-splashscreen:1.0.1")
     //Para GoogleMaps
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
     //Para Street Maps
     implementation("org.osmdroid:osmdroid-android:6.1.17")
-
-
 }

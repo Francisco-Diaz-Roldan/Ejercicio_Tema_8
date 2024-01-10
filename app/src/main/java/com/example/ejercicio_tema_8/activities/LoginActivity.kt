@@ -28,8 +28,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         prefs = getSharedPreferences("app", MODE_PRIVATE)
         establecerValoresSiExisten()
         binding.btnLogin.setOnClickListener{
-            val email=binding.etEmail.text.toString()
-            val password= binding.etPassword.text.toString()
+            val email=binding.etEmail.editText?.text.toString() //Añado editText?. por el material components
+            val password= binding.etPassword.editText?.text.toString() //Añado editText?. por el material components
             if(login(email, password)) goToMain()
             guardarPreferencias(email, password)
         }
@@ -106,8 +106,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     val password = prefs.getString("password", "")
     val recordar = prefs.getBoolean("recordar", false)
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
-            binding.etEmail.setText(email)
-            binding.etPassword.setText(password)
+            binding.etEmail.editText?.setText(email) //Añado editText?. por el material components
+            binding.etPassword.editText?.setText(password) //Añado editText?. por el material components
             binding.swRecordarUsuario.isChecked = recordar
         }
     }

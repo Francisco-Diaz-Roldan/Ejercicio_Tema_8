@@ -38,40 +38,59 @@
         android:id="@+id/tvInicioSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="165dp"
+        android:layout_marginTop="68dp"
         android:text="COMUNIDADES"
+        android:textColor="@color/orange"
         android:textSize="32dp"
         android:textStyle="bold"
-        android:textColor="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etEmail"
-        android:layout_width="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="E-mail"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="128dp"
         android:ems="16"
         android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="@+id/tvInicioSesion"
-        app:layout_constraintStart_toStartOf="@+id/tvInicioSesion"
-        app:layout_constraintTop_toBottomOf="@+id/tvInicioSesion" />
+        android:hint="Email"
+        app:helperText="Correo electrónico"
+        app:helperTextTextColor="@color/blue"
+        android:autofillHints="emailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etPassword"
-        android:layout_width="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="48dp"
         android:ems="16"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/etEmail"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/etEmail"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+        android:hint="Password"
+        android:autofillHints="Password"
+        app:helperText="5 caracteres"
+        app:helperTextTextColor="@color/blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etEmail"
+        app:passwordToggleEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Switch
         android:id="@+id/swRecordarUsuario"
@@ -84,8 +103,8 @@
         app:layout_constraintStart_toStartOf="@+id/etPassword"
         app:layout_constraintTop_toBottomOf="@+id/etPassword"
         android:thumbTint="@color/orange"
-    android:trackTint="@color/orange"
-    />
+        android:trackTint="@color/orange"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <Button
         android:id="@+id/btnLogin"
