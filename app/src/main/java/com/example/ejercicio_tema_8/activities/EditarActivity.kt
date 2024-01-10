@@ -29,7 +29,7 @@ class EditarActivity : AppCompatActivity(), OnClickListener {
         btnEditar.setOnClickListener(this)
         btnCancelar = binding.btnCancelar
         btnCancelar.setOnClickListener(this)
-        infoNombre = binding.etNombre
+        infoNombre = binding.etNombre.editText!!
         infoImagen = binding.imgComunidadAutonoma
         infoImagen.setImageResource(imagen)
         infoNombre.hint = nombre
