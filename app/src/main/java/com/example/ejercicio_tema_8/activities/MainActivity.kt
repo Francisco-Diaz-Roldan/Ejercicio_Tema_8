@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private var comunidadDAO: ComunidadAutonomaDAO = ComunidadAutonomaDAO()
     private lateinit var comunidadSeleccionada: ComunidadAutonoma
-    private lateinit var listaComunidades: MutableList<ComunidadAutonoma>
+    private lateinit var listaComunidades: List<ComunidadAutonoma>
     private lateinit var binding: ActivityMainBinding
     private lateinit var intentLaunch: ActivityResultLauncher<Intent>
     private var nombreComunidad = "Sin nombre"
@@ -117,7 +117,10 @@ class MainActivity : AppCompatActivity() {
                         )
                         .setNeutralButton("Cerrar", null).setPositiveButton("Aceptar") { _, _ ->
                             display("Se ha eliminado ${comunidadSeleccionada.nombre}")
-                            listaComunidades.removeAt(item.groupId)
+
+                            // Actualiza la lista quitando el elemento
+                            listaComunidades = listaComunidades.minus(comunidadSeleccionada)
+
                             binding.rvComunidades.adapter?.notifyItemRemoved(item.groupId)
                             binding.rvComunidades.adapter?.notifyItemRangeChanged(
                                 item.groupId,
