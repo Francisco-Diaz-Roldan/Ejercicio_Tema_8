@@ -10,5 +10,6 @@
     <string name="cinco_caracteres">5 caracteres</string>
     <string name="recordar_usuario">Recordar usuario</string>
     <string name="login">Login</string>
-    <string name="se_trata_de_la_banderaade_la_comunidad_autonoma">Se trata de la banderaade la comunidad autonoma</string>
+    <string name="se_trata_de_la_banderaade_la_comunidad_autonoma">
+        Se trata de la banderaade la comunidad autonoma</string>
 </resources>
