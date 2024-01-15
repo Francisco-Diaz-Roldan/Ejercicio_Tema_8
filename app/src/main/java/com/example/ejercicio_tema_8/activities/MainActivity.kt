@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
 
             R.id.logOut -> {
                 val intent = Intent(this, LoginActivity::class.java)
-                // Limpiola pila de actividades y coloco la actividad de inicio de sesión en la parte superior
+                // Limpio la pila de actividades y coloco la actividad de inicio de sesión en la parte superior
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 true
