@@ -36,25 +36,28 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         listaComunidades = comunidadDAO.cargarLista(this)
-        binding.rvComunidades.layoutManager = LinearLayoutManager(this)
-        binding.rvComunidades.adapter =
-            ComunidadAutonomaAdapter(listaComunidades) { comunidadAutonoma ->
-                onItemSelected(comunidadAutonoma)
-            }
 
-        intentLaunch = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()) {
-                result: ActivityResult ->
+        adapter = ComunidadAutonomaAdapter(listaComunidades) { comunidadAutonoma ->
+            onItemSelected(comunidadAutonoma)
+        }
+
+        binding.rvComunidades.layoutManager = LinearLayoutManager(this)
+        binding.rvComunidades.adapter = adapter
+
+        intentLaunch = registerForActivityResult(   //Aquí recibo resultados de la otra actividad
+            ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 nombreComunidad = result.data?.extras?.getString("nombre").toString()
                 id = result.data?.extras?.getInt("id") as Int
                 listaComunidades[id].nombre = nombreComunidad
-                adapter = ComunidadAutonomaAdapter(listaComunidades) { comunidadAutonoma ->
-                    onItemSelected(comunidadAutonoma)
-                }
-                adapter.notifyItemChanged(id)
-                comunidadDAO.actualizarBBDD(this, listaComunidades[id])
+                adapter.updateList(listaComunidades)
                 binding.rvComunidades.adapter = adapter
+                // Me aseguro de inicializar el adapter
+                if (::adapter.isInitialized) {
+                    // Reemplazo con el uso de updateList()
+                    adapter.updateList(listaComunidades)
+                }
+                comunidadDAO.actualizarBBDD(this, listaComunidades[id])
             }
         }
 
@@ -75,20 +78,14 @@ class MainActivity : AppCompatActivity() {
             R.id.limpiar -> {
                 comunidadDAO.cambiarEstadoEliminado(this)
                 listaComunidades = comunidadDAO.cargarLista(this)
-                binding.rvComunidades.adapter?.notifyDataSetChanged()
-                binding.rvComunidades.adapter = ComunidadAutonomaAdapter(listaComunidades) {
-                    onItemSelected(it)
-                }
+                adapter.updateList(listaComunidades)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter?.notifyDataSetChanged() binding.rvComunidades.adapter = ComunidadAutonomaAdapter(listaComunidades) { onItemSelected(it) }
                 true
             }
 
             R.id.recargar -> {
                 comunidadDAO.cambiarEstadoActivo(this)
                 listaComunidades = comunidadDAO.cargarLista(this)
-                binding.rvComunidades.adapter?.notifyDataSetChanged()
-                binding.rvComunidades.adapter = ComunidadAutonomaAdapter(listaComunidades) {
-                    onItemSelected(it)
-                }
+                adapter.updateList(listaComunidades)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter?.notifyDataSetChanged() binding.rvComunidades.adapter = ComunidadAutonomaAdapter(listaComunidades) { onItemSelected(it) }
                 true
             }
 
@@ -99,7 +96,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -109,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         comunidadSeleccionada = listaComunidades[item.groupId]
         when (item.itemId) {
 
-            0 -> {
+            0 -> { //ELIMINAR
                 val alert =
                     AlertDialog.Builder(this).setTitle("Eliminar ${comunidadSeleccionada.nombre}")
                         .setMessage(
@@ -119,23 +115,14 @@ class MainActivity : AppCompatActivity() {
                             display("Se ha eliminado ${comunidadSeleccionada.nombre}")
 
                             // Actualizo la lista quitando el elemento
-                            listaComunidades = listaComunidades.minus(comunidadSeleccionada)
-                            //adapter.updateList(listaComunidades) TODO Borrar esta linea de codigo
-                            binding.rvComunidades.adapter?.notifyItemRemoved(item.groupId)
-                            binding.rvComunidades.adapter?.notifyItemRangeChanged(
-                                item.groupId,
-                                listaComunidades.size
-                            )
-                            binding.rvComunidades.adapter =
-                                ComunidadAutonomaAdapter(listaComunidades) {
-                                    onItemSelected(it)
-                                }
+                            listaComunidades = listaComunidades.minus(comunidadSeleccionada)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter?.notifyItemRemoved(item.groupId) binding.rvComunidades.adapter?.notifyItemRangeChanged(  item.groupId, listaComunidades.size)
+                            adapter.updateList(listaComunidades)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter = ComunidadAutonomaAdapter(listaComunidades) { onItemSelected(it) }
                             comunidadDAO.borrarDeBBDD(this, comunidadSeleccionada.nombre)
                         }.create()
                 alert.show()
             }
 
-            1 -> {
+            1 -> { //EDITAR
                 miIntent = Intent(this, EditarActivity::class.java)
                 miIntent.putExtra("nombreComunidad", listaComunidades[item.groupId].nombre)
                 miIntent.putExtra("id", item.groupId)
@@ -155,7 +142,6 @@ class MainActivity : AppCompatActivity() {
     private fun onItemSelected(comunidadAutonoma: ComunidadAutonoma) {
         Toast.makeText(this, "Yo soy de ${comunidadAutonoma.nombre}", Toast.LENGTH_SHORT).show()
         // Para iniciar la actividad OpenStreetMapsActivity o en GoogleMapsActivity
-
         val intent = Intent(this, GoogleMapsActivity::class.java)
         intent.putExtra("comunidadNombre", comunidadAutonoma.nombre)
         intent.putExtra("comunidadHabitantes", comunidadAutonoma.habitantes)
@@ -164,5 +150,4 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("comunidadLongitud", comunidadAutonoma.longitud)
         startActivity(intent)
     }
-
 }

@@ -33,7 +33,7 @@ class ComunidadAutonomaAdapter(
         holder.render(item, onClickListener)
     }
 
-    fun updateList(newList: List<ComunidadAutonoma>){
+    fun updateList(newList: List<ComunidadAutonoma>) {
         val comunidadAutonomaDiff = ComunidadAutonomaDiffUtil(comunidadLista, newList)
         val result = DiffUtil.calculateDiff(comunidadAutonomaDiff)
         comunidadLista = newList
