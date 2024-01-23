@@ -21,7 +21,7 @@ class ComunidadAutonomaViewHolder(view: View): RecyclerView.ViewHolder(view), Vi
 
     }
 
-    override fun onCreateContextMenu(
+    override fun onCreateContextMenu( //Al dejar pulsado sobre una Comunidad Autonoma
         menu: ContextMenu?,
         v: View?,
         menuInfo: ContextMenu.ContextMenuInfo?
@@ -29,5 +29,7 @@ class ComunidadAutonomaViewHolder(view: View): RecyclerView.ViewHolder(view), Vi
         menu!!.setHeaderTitle(comunidad.nombre)
         menu.add(this.adapterPosition, 0, 0, "Eliminar")
         menu.add(this.adapterPosition, 1, 1, "Editar")
+        menu.add(this.adapterPosition, 2, 2, "Hacer foto")
+        menu.add(this.adapterPosition, 3, 3, "Ver foto")
     }
 }

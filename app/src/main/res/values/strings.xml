@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ejercicio_Tema_8</string>
+    <string name="app_name">Ejercicio_Tema_11</string>
     <string name="title_activity_google_maps">GoogleMapsActivity</string>
     <string name="editar">Editar</string>
     <string name="c_autonoma">C. Autónoma</string>
@@ -13,4 +13,9 @@
     <string name="se_trata_de_la_banderaade_la_comunidad_autonoma">
         Se trata de la banderaade la comunidad autonoma</string>
     <string name="foto">Foto\n</string>
+    <string name="hacer_foto">Hacer foto\n</string>
+    <string name="ver_foto">Ver foto\n</string>
+    <string name="logout">LogOut</string>
+    <string name="limpiar">Limpiar</string>
+    <string name="recargar">Recargar</string>
 </resources>

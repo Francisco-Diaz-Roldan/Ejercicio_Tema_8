@@ -12,15 +12,15 @@
         <menu>
             <item
                 android:id="@+id/logOut"
-                android:title="LogOut"
+                android:title="@string/logout"
                 />
             <item
                 android:id="@+id/limpiar"
-                android:title="Limpiar"
+                android:title="@string/limpiar"
                 />
             <item
                 android:id="@+id/recargar"
-                android:title="Recargar"
+                android:title="@string/recargar"
                 />
         </menu>
     </item>
