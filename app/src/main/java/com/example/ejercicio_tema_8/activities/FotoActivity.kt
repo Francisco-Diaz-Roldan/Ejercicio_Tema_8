@@ -1,6 +1,7 @@
 package com.example.ejercicio_tema_8.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
@@ -18,6 +19,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.ejercicio_tema_8.databinding.ActivityFotoBinding
+import com.example.ejercicio_tema_8.domain.ComunidadAutonomaDAO
 import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -27,6 +29,7 @@ class FotoActivity : AppCompatActivity() {
     private lateinit var cameraExecutorService: ExecutorService
     private lateinit var imageCapture: ImageCapture
     private lateinit var nombreComunidad: String
+
     private var id = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +38,7 @@ class FotoActivity : AppCompatActivity() {
         setContentView(binding.root)
         id = intent.extras!!.getInt("id")
         nombreComunidad = intent.extras!!.getString("nombreComunidad").toString()
+
         //Solicitud de los permisos de la cámara
         if(allPermissionsGranted()){
             startCamera()
@@ -54,9 +58,11 @@ class FotoActivity : AppCompatActivity() {
     }
 
     private fun hacerFoto(){
-        //Obtenemos una referencia estable para el caso de uso de captura de imágenes
+        // Obtenemos una referencia estable para el caso de uso de captura de imágenes
         val imageCapture = imageCapture?: return
-        //Creamos un nombre para el archivo con la hora y dónde se va a almacenar
+        // Asigno la instancia local a la propiedad de clase
+        this@FotoActivity.imageCapture = imageCapture
+        // Creamos un nombre para el archivo con la hora y dónde se va a almacenar
         val nombreComunidad = "${nombreComunidad}_" + SimpleDateFormat(FILENAME_FORMAT, Locale.US)
             .format(System.currentTimeMillis())
         val contentValues = ContentValues().apply {
@@ -81,35 +87,39 @@ class FotoActivity : AppCompatActivity() {
                 override fun onError(ex: ImageCaptureException) {
                     Log.e(TAG, "Fallo en la captura de la foto: ${ex.message}", ex)
                 }
-                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                val msg = "Captura de foto correcta: ${output.savedUri}"
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                }
 
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val msg = "Captura de foto correcta: ${output.savedUri}"
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    // INSERTAR LA URI EN LA BASE DE DATOS output.savedUri
+                    val fotoUri = output.savedUri
+                    val miDAO = ComunidadAutonomaDAO()
+                    val comunidadAutonomaElegida = miDAO.obtenerComunidadAutonoma(applicationContext, id)
+                    comunidadAutonomaElegida?.uri = fotoUri?.toString().toString()
+                    comunidadAutonomaElegida?.let { miDAO.actualizarBBDD(applicationContext, it) }
+                }
             }
         )
     }
 
-    private fun startCamera(){
+    private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraProviderFuture.addListener({
             // Vinculamos para vincular el ciclo de vida de la cámara al ciclo de vida de la app
-            val cameraProvider : ProcessCameraProvider = cameraProviderFuture.get()
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             //Preview
-            val preview = Preview.Builder()
-                .build()
-                .also{
-                    it.setSurfaceProvider(binding.cameraViewFinder.surfaceProvider)
-                }
+            val preview = Preview.Builder().build().also {
+                it.setSurfaceProvider(binding.cameraViewFinder.surfaceProvider)
+            }
             //Selecciona la cámara trasera por defecto
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-            try{
+            try {
                 //Desvincula antes de volver a vincular
                 cameraProvider.unbindAll()
                 //Vinculamos los casos de uso a la cámara
-                cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview)
-            } catch (ex : Exception){
+                imageCapture = ImageCapture.Builder().build() // Inicializa ImageCapture
+                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
+            } catch (ex: Exception) {
                 Log.e(TAG, "Vinculación errónea", ex)
             }
         }, ContextCompat.getMainExecutor(this))
@@ -152,4 +162,3 @@ class FotoActivity : AppCompatActivity() {
         }
     }
 }
-

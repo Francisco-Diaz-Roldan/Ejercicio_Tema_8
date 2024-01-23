@@ -19,7 +19,8 @@ class ComunidadAutonomaDAO {
                     c.getInt(0), c.getString(1),
                     c.getInt(2), c.getInt(3),
                     c.getString(4), c.getDouble(5),
-                    c.getDouble(6), c.getInt(7)
+                    c.getDouble(6), c.getInt(7),
+                    c.getString(8)
                 )
                 res.add(nueva)
             }
@@ -28,6 +29,31 @@ class ComunidadAutonomaDAO {
         }
         return res
     }
+
+    fun obtenerComunidadAutonoma(context: Context?, id: Int): ComunidadAutonoma? {
+        var comunidadAutonoma: ComunidadAutonoma?= null
+        lateinit var c: Cursor
+        try {
+            val db = DBOpenHelper.getInstance(context)!!.readableDatabase
+            val sql = "SELECT * FROM comunidades WHERE estado = 'activo' AND id = ?;"
+            val selectionArgs = arrayOf(id.toString())
+            c = db.rawQuery(sql, selectionArgs)
+            // Leo los resultados del cursor e insertarlos en la lista
+            if (c.moveToNext()) {
+                val comunidadAutonoma  = ComunidadAutonoma(
+                    c.getInt(0), c.getString(1),
+                    c.getInt(2), c.getInt(3),
+                    c.getString(4), c.getDouble(5),
+                    c.getDouble(6), c.getInt(7),
+                    c.getString(8)
+                )
+            }
+        } finally {
+            c.close()
+        }
+        return comunidadAutonoma
+    }
+
 
     fun borrarDeBBDD(context: Context?, nombre: String) {
         val db = DBOpenHelper.getInstance(context)!!.writableDatabase
@@ -39,16 +65,17 @@ class ComunidadAutonomaDAO {
         val db = DBOpenHelper.getInstance(context)!!.writableDatabase
 
         val values = ContentValues()
-        values.put(ComunidadContract.Companion.Entrada.COLUMNA_ID, comunidad.id)
-        values.put(ComunidadContract.Companion.Entrada.COLUMNA_NOMBRE, comunidad.nombre)
-        values.put(ComunidadContract.Companion.Entrada.COLUMNA_IMAGEN, comunidad.imagen)
-        values.put(ComunidadContract.Companion.Entrada.COLUMNA_HABITANTES, comunidad.habitantes)
-        values.put(ComunidadContract.Companion.Entrada.COLUMNA_CAPITAL, comunidad.capital)
-        values.put(ComunidadContract.Companion.Entrada.COLUMNA_LATITUD, comunidad.latitud)
-        values.put(ComunidadContract.Companion.Entrada.COLUMNA_LONGITUD, comunidad.longitud)
-        values.put(ComunidadContract.Companion.Entrada.COLUMNA_ICONO, comunidad.icono)
-        db.update(
-            ComunidadContract.Companion.Entrada.NOMBRE_TABLA,
+        values.put(ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ID, comunidad.id)
+        values.put(ComunidadAutonomaContract.Companion.Entrada.COLUMNA_NOMBRE, comunidad.nombre)
+        values.put(ComunidadAutonomaContract.Companion.Entrada.COLUMNA_IMAGEN, comunidad.imagen)
+        values.put(ComunidadAutonomaContract.Companion.Entrada.COLUMNA_HABITANTES, comunidad.habitantes)
+        values.put(ComunidadAutonomaContract.Companion.Entrada.COLUMNA_CAPITAL, comunidad.capital)
+        values.put(ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LATITUD, comunidad.latitud)
+        values.put(ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LONGITUD, comunidad.longitud)
+        values.put(ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ICONO, comunidad.icono)
+        values.put(ComunidadAutonomaContract.Companion.Entrada.COLUMNA_URI, comunidad.uri)
+
+        db.update(ComunidadAutonomaContract.Companion.Entrada.NOMBRE_TABLA,
             values,
             "id=?",
             arrayOf(comunidad.id.toString())

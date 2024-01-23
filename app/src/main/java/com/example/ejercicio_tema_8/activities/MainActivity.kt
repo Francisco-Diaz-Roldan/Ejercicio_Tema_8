@@ -131,12 +131,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             2 -> { //HACER FOTO
-                val intent = Intent(this, FotoActivity::class.java)
-                intent.putExtra("nombreComunidad", listaComunidades[item.groupId].nombre)
+                miIntent = Intent(this, FotoActivity::class.java)
+                miIntent.putExtra("nombreComunidad", listaComunidades[item.groupId].nombre)
                 miIntent.putExtra("id", item.groupId)
-                intent.putExtra("imagen", listaComunidades[item.groupId].imagen)
-                startActivity(intent)            }
-
+                miIntent.putExtra("imagen", listaComunidades[item.groupId].imagen)
+                intentLaunch.launch(miIntent)
+            }
             else -> return super.onContextItemSelected(item)
         }
         return true

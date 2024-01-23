@@ -2,7 +2,7 @@ package com.example.ejercicio_tema_8.domain
 
 import android.provider.BaseColumns
 
-class ComunidadContract {
+class ComunidadAutonomaContract {
     companion object {
         const val NOMBRE_BD = "comunidadesAutónomas"
         const val VERSION = 1
@@ -19,6 +19,7 @@ class ComunidadContract {
                 const val COLUMNA_LONGITUD = "longitud"
                 const val COLUMNA_ICONO = "icono"
                 const val COLUMNA_ESTADO = "estado"
+                const val COLUMNA_URI = "uri"
             }
         }
     }

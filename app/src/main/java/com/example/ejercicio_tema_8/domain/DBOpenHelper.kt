@@ -1,5 +1,6 @@
 package com.example.ejercicio_tema_8.domain
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -7,20 +8,21 @@ import com.example.ejercicio_tema_8.adapter.ComunidadAutonomaProvider
 import java.lang.Exception
 
 class DBOpenHelper private constructor(context: Context?):
-    SQLiteOpenHelper(context, ComunidadContract.NOMBRE_BD, null, ComunidadContract.VERSION) {
+    SQLiteOpenHelper(context, ComunidadAutonomaContract.NOMBRE_BD, null, ComunidadAutonomaContract.VERSION) {
     override fun onCreate(sqLiteDatabase: SQLiteDatabase) {
         try {
             sqLiteDatabase.execSQL(
-                "CREATE TABLE ${ComunidadContract.Companion.Entrada.NOMBRE_TABLA}"
-                        + "(${ComunidadContract.Companion.Entrada.COLUMNA_ID} int NOT NULL"
-                        + ",${ComunidadContract.Companion.Entrada.COLUMNA_NOMBRE} NVARCHAR(20) NOT NULL"
-                        + ",${ComunidadContract.Companion.Entrada.COLUMNA_IMAGEN} int NOT NULL"
-                        + ",${ComunidadContract.Companion.Entrada.COLUMNA_HABITANTES} int NOT NULL"
-                        + ",${ComunidadContract.Companion.Entrada.COLUMNA_CAPITAL} NVARCHAR(20) NOT NULL"
-                        + ",${ComunidadContract.Companion.Entrada.COLUMNA_LATITUD} REAL NOT NULL"
-                        + ",${ComunidadContract.Companion.Entrada.COLUMNA_LONGITUD} REAL NOT NULL"
-                        + ",${ComunidadContract.Companion.Entrada.COLUMNA_ICONO} int NOT NULL" +
-                        ",${ComunidadContract.Companion.Entrada.COLUMNA_ESTADO} TEXT CHECK(${ComunidadContract.Companion.Entrada.COLUMNA_ESTADO} IN ('activo', 'eliminado')) DEFAULT 'activo');")
+                "CREATE TABLE ${ComunidadAutonomaContract.Companion.Entrada.NOMBRE_TABLA}"
+                        + "(${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ID} int NOT NULL"
+                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_NOMBRE} NVARCHAR(20) NOT NULL"
+                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_IMAGEN} int NOT NULL"
+                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_HABITANTES} int NOT NULL"
+                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_CAPITAL} NVARCHAR(20) NOT NULL"
+                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LATITUD} REAL NOT NULL"
+                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LONGITUD} REAL NOT NULL"
+                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ICONO} int NOT NULL"
+                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ESTADO} TEXT CHECK(${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ESTADO} IN ('activo', 'eliminado')) DEFAULT 'activo'"
+                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_URI} NVARCHAR(20) );")
 
             // Inserto los datos en la tabla
             inicializarBBDD(sqLiteDatabase)
@@ -30,7 +32,7 @@ class DBOpenHelper private constructor(context: Context?):
     }
 
     override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, i: Int, i1: Int) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS ${ComunidadContract.Companion.Entrada.NOMBRE_TABLA};")
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS ${ComunidadAutonomaContract.Companion.Entrada.NOMBRE_TABLA};")
         onCreate(sqLiteDatabase)
     }
 
@@ -38,18 +40,19 @@ class DBOpenHelper private constructor(context: Context?):
         val lista = ComunidadAutonomaProvider.listaComunidadAutonoma
         for (comunidad in lista) {
             db.execSQL(
-                "INSERT INTO ${ComunidadContract.Companion.Entrada.NOMBRE_TABLA}(" +
-                        "${ComunidadContract.Companion.Entrada.COLUMNA_ID}," +
-                        "${ComunidadContract.Companion.Entrada.COLUMNA_NOMBRE}," +
-                        "${ComunidadContract.Companion.Entrada.COLUMNA_IMAGEN}," +
-                        "${ComunidadContract.Companion.Entrada.COLUMNA_HABITANTES}," +
-                        "${ComunidadContract.Companion.Entrada.COLUMNA_CAPITAL}," +
-                        "${ComunidadContract.Companion.Entrada.COLUMNA_LATITUD}," +
-                        "${ComunidadContract.Companion.Entrada.COLUMNA_LONGITUD}," +
-                        "${ComunidadContract.Companion.Entrada.COLUMNA_ICONO})" +
+                "INSERT INTO ${ComunidadAutonomaContract.Companion.Entrada.NOMBRE_TABLA}(" +
+                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ID}," +
+                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_NOMBRE}," +
+                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_IMAGEN}," +
+                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_HABITANTES}," +
+                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_CAPITAL}," +
+                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LATITUD}," +
+                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LONGITUD}," +
+                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ICONO})" +
+                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_URI})" +
                         " VALUES (${comunidad.id},'${comunidad.nombre}',${comunidad.imagen}," +
                         "${comunidad.habitantes},'${comunidad.capital}',${comunidad.latitud}," +
-                        "${comunidad.longitud},${comunidad.icono});"
+                        "${comunidad.longitud},${comunidad.icono},'${comunidad.uri}');"
             )
         }
     }
