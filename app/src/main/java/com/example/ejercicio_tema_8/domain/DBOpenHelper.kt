@@ -1,11 +1,9 @@
 package com.example.ejercicio_tema_8.domain
 
-import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.ejercicio_tema_8.adapter.ComunidadAutonomaProvider
-import java.lang.Exception
 
 class DBOpenHelper private constructor(context: Context?):
     SQLiteOpenHelper(context, ComunidadAutonomaContract.NOMBRE_BD, null, ComunidadAutonomaContract.VERSION) {
@@ -22,7 +20,7 @@ class DBOpenHelper private constructor(context: Context?):
                         + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LONGITUD} REAL NOT NULL"
                         + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ICONO} int NOT NULL"
                         + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ESTADO} TEXT CHECK(${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ESTADO} IN ('activo', 'eliminado')) DEFAULT 'activo'"
-                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_URI} NVARCHAR(20) );")
+                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_URI} NVARCHAR(120) );")
 
             // Inserto los datos en la tabla
             inicializarBBDD(sqLiteDatabase)
@@ -48,7 +46,7 @@ class DBOpenHelper private constructor(context: Context?):
                         "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_CAPITAL}," +
                         "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LATITUD}," +
                         "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LONGITUD}," +
-                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ICONO})" +
+                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ICONO}" +
                         "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_URI})" +
                         " VALUES (${comunidad.id},'${comunidad.nombre}',${comunidad.imagen}," +
                         "${comunidad.habitantes},'${comunidad.capital}',${comunidad.latitud}," +
