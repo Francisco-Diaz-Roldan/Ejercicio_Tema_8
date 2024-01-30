@@ -30,7 +30,8 @@ class DBOpenHelper private constructor(context: Context?):
     }
 
     override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, i: Int, i1: Int) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS ${ComunidadAutonomaContract.Companion.Entrada.NOMBRE_TABLA};")
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS ${ComunidadAutonomaContract.Companion
+            .Entrada.NOMBRE_TABLA};")
         onCreate(sqLiteDatabase)
     }
 
@@ -46,7 +47,7 @@ class DBOpenHelper private constructor(context: Context?):
                         "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_CAPITAL}," +
                         "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LATITUD}," +
                         "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LONGITUD}," +
-                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ICONO}" +
+                        "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ICONO}," +
                         "${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_URI})" +
                         " VALUES (${comunidad.id},'${comunidad.nombre}',${comunidad.imagen}," +
                         "${comunidad.habitantes},'${comunidad.capital}',${comunidad.latitud}," +

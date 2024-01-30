@@ -140,9 +140,7 @@ class MainActivity : AppCompatActivity() {
 
             3 -> { // VER FOTO
                 miIntent = Intent(this, ImageActivity::class.java)
-                miIntent.putExtra("nombreComunidad", listaComunidades[item.groupId].nombre)
                 miIntent.putExtra("id", item.groupId)
-                miIntent.putExtra("uriImagen", listaComunidades[item.groupId].uri)
                 intentLaunch.launch(miIntent)
             }
             else -> return super.onContextItemSelected(item)

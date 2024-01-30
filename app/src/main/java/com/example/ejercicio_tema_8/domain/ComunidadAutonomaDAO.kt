@@ -20,7 +20,7 @@ class ComunidadAutonomaDAO {
                     c.getInt(2), c.getInt(3),
                     c.getString(4), c.getDouble(5),
                     c.getDouble(6), c.getInt(7),
-                    c.getString(8)
+                    c.getString(9)
                 )
                 res.add(nueva)
             }
@@ -40,12 +40,12 @@ class ComunidadAutonomaDAO {
             c = db.rawQuery(sql, selectionArgs)
             // Leo los resultados del cursor e insertarlos en la lista
             if (c.moveToNext()) {
-                val comunidadAutonoma  = ComunidadAutonoma(
+                 comunidadAutonoma  = ComunidadAutonoma(
                     c.getInt(0), c.getString(1),
                     c.getInt(2), c.getInt(3),
                     c.getString(4), c.getDouble(5),
                     c.getDouble(6), c.getInt(7),
-                    c.getString(8)
+                    c.getString(9)
                 )
             }
         } finally {

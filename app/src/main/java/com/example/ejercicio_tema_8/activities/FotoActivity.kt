@@ -1,7 +1,6 @@
 package com.example.ejercicio_tema_8.activities
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
@@ -97,6 +96,9 @@ class FotoActivity : AppCompatActivity() {
                     val comunidadAutonomaElegida = miDAO.obtenerComunidadAutonoma(applicationContext, id)
                     comunidadAutonomaElegida?.uri = fotoUri?.toString().toString()
                     comunidadAutonomaElegida?.let { miDAO.actualizarBBDD(applicationContext, it) }
+                    if (comunidadAutonomaElegida != null) { //Actualizo el DAO -> Importante
+                        miDAO.actualizarBBDD(applicationContext, comunidadAutonomaElegida)
+                    }
                 }
             }
         )
