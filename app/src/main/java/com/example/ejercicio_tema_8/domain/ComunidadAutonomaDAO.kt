@@ -10,7 +10,7 @@ class ComunidadAutonomaDAO {
         lateinit var c: Cursor
         try {
             val db = DBOpenHelper.getInstance(context)!!.readableDatabase
-            val sql = "SELECT * FROM comunidades WHERE estado = 'activo';"
+            val sql = "SELECT * FROM comunidades WHERE estado = 'visible';"
             c = db.rawQuery(sql, null)
             res = mutableListOf()
             // Leer resultados del cursor e insertarlos en la lista
@@ -35,7 +35,7 @@ class ComunidadAutonomaDAO {
         lateinit var c: Cursor
         try {
             val db = DBOpenHelper.getInstance(context)!!.readableDatabase
-            val sql = "SELECT * FROM comunidades WHERE estado = 'activo' AND id = ?;"
+            val sql = "SELECT * FROM comunidades WHERE estado = 'visible' AND id = ?;"
             val selectionArgs = arrayOf(id.toString())
             c = db.rawQuery(sql, selectionArgs)
             // Leo los resultados del cursor e insertarlos en la lista
@@ -57,7 +57,7 @@ class ComunidadAutonomaDAO {
 
     fun borrarDeBBDD(context: Context?, nombre: String) {
         val db = DBOpenHelper.getInstance(context)!!.writableDatabase
-        db.execSQL("UPDATE comunidades SET estado='eliminado' WHERE nombre='$nombre';")
+        db.execSQL("UPDATE comunidades SET estado='invisible' WHERE nombre='$nombre';")
         db.close()
     }
 
@@ -83,11 +83,11 @@ class ComunidadAutonomaDAO {
         db.close()
     }
 
-    fun cambiarEstadoActivo(context: Context?) {
+    fun cambiarEstadoVisible(context: Context?) {
         val db = DBOpenHelper.getInstance(context)!!.writableDatabase
         db.beginTransaction()
         try {
-            db.execSQL("UPDATE comunidades SET estado='activo'")
+            db.execSQL("UPDATE comunidades SET estado='visible'")
             db.setTransactionSuccessful()
         } finally {
             db.endTransaction()
@@ -99,7 +99,7 @@ class ComunidadAutonomaDAO {
         val db = DBOpenHelper.getInstance(context)!!.writableDatabase
         db.beginTransaction()
         try {
-            db.execSQL("UPDATE comunidades SET estado='eliminado'")
+            db.execSQL("UPDATE comunidades SET estado='invisible'")
             db.setTransactionSuccessful()
         } finally {
             db.endTransaction()

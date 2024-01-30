@@ -19,7 +19,7 @@ class DBOpenHelper private constructor(context: Context?):
                         + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LATITUD} REAL NOT NULL"
                         + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_LONGITUD} REAL NOT NULL"
                         + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ICONO} int NOT NULL"
-                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ESTADO} TEXT CHECK(${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ESTADO} IN ('activo', 'eliminado')) DEFAULT 'activo'"
+                        + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ESTADO} TEXT CHECK(${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_ESTADO} IN ('visible', 'invisible')) DEFAULT 'visible'"
                         + ",${ComunidadAutonomaContract.Companion.Entrada.COLUMNA_URI} NVARCHAR(120) );")
 
             // Inserto los datos en la tabla

@@ -76,24 +76,17 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.limpiar -> {
-                comunidadDAO.cambiarEstadoEliminado(this)
-                listaComunidades = comunidadDAO.cargarLista(this)
-                adapter.updateList(listaComunidades)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter?.notifyDataSetChanged() binding.rvComunidades.adapter = ComunidadAutonomaAdapter(listaComunidades) { onItemSelected(it) }
+                limpiarListaComunidadesAutonomas()
                 true
             }
 
             R.id.recargar -> {
-                comunidadDAO.cambiarEstadoActivo(this)
-                listaComunidades = comunidadDAO.cargarLista(this)
-                adapter.updateList(listaComunidades)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter?.notifyDataSetChanged() binding.rvComunidades.adapter = ComunidadAutonomaAdapter(listaComunidades) { onItemSelected(it) }
+                recargarListaComunidadesAutonomas()
                 true
             }
 
             R.id.logOut -> {
-                val intent = Intent(this, LoginActivity::class.java)
-                // Limpio la pila de actividades y coloco la actividad de inicio de sesión en la parte superior
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
+                logOut()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -105,51 +98,16 @@ class MainActivity : AppCompatActivity() {
         comunidadSeleccionada = listaComunidades[item.groupId]
         when (item.itemId) {
 
-            0 -> { //ELIMINAR
-                val alert =
-                    AlertDialog.Builder(this).setTitle("Eliminar ${comunidadSeleccionada.nombre}")
-                        .setMessage(
-                            "¿Estás seguro de que quieres eliminar ${comunidadSeleccionada.nombre}?"
-                        )
-                        .setNeutralButton("Cerrar", null).setPositiveButton("Aceptar") { _, _ ->
-                            display("Se ha eliminado ${comunidadSeleccionada.nombre}")
+            0 -> { eliminarComunidadAutonoma() }//ELIMINAR
 
-                            // Actualizo la lista quitando el elemento
-                            listaComunidades = listaComunidades.minus(comunidadSeleccionada)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter?.notifyItemRemoved(item.groupId) binding.rvComunidades.adapter?.notifyItemRangeChanged(  item.groupId, listaComunidades.size)
-                            adapter.updateList(listaComunidades)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter = ComunidadAutonomaAdapter(listaComunidades) { onItemSelected(it) }
-                            comunidadDAO.borrarDeBBDD(this, comunidadSeleccionada.nombre)
-                        }.create()
-                alert.show()
-            }
+            1 -> { editarComunidadAutonoma(item.groupId) }//EDITAR
 
-            1 -> { //EDITAR
-                miIntent = Intent(this, EditarActivity::class.java)
-                miIntent.putExtra("nombreComunidad", listaComunidades[item.groupId].nombre)
-                miIntent.putExtra("id", item.groupId)
-                miIntent.putExtra("imagen", listaComunidades[item.groupId].imagen)
-                intentLaunch.launch(miIntent)
-            }
+            2 -> { hacerFoto(item.groupId) }//HACER FOTO
 
-            2 -> { //HACER FOTO
-                miIntent = Intent(this, FotoActivity::class.java)
-                miIntent.putExtra("nombreComunidad", listaComunidades[item.groupId].nombre)
-                miIntent.putExtra("id", item.groupId)
-                miIntent.putExtra("imagen", listaComunidades[item.groupId].imagen)
-                intentLaunch.launch(miIntent)
-            }
-
-            3 -> { // VER FOTO
-                miIntent = Intent(this, ImageActivity::class.java)
-                miIntent.putExtra("id", item.groupId)
-                intentLaunch.launch(miIntent)
-            }
+            3 -> { verFoto(item.groupId) }//VER FOTO
             else -> return super.onContextItemSelected(item)
         }
         return true
-    }
-
-    private fun display(s: String) {
-        Snackbar.make(binding.root, s, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun onItemSelected(comunidadAutonoma: ComunidadAutonoma) {
@@ -161,6 +119,69 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("comunidadCapital", comunidadAutonoma.capital)
         intent.putExtra("comunidadLatitud", comunidadAutonoma.latitud)
         intent.putExtra("comunidadLongitud", comunidadAutonoma.longitud)
+        startActivity(intent)
+    }
+
+    private fun eliminarComunidadAutonoma() {
+        val alert =
+            AlertDialog.Builder(this).setTitle("Eliminar ${comunidadSeleccionada.nombre}")
+                .setMessage(
+                    "¿Estás seguro de que quieres eliminar ${comunidadSeleccionada.nombre}?"
+                )
+                .setNeutralButton("Cerrar", null).setPositiveButton("Aceptar") { _, _ ->
+                    display("Se ha eliminado ${comunidadSeleccionada.nombre}")
+
+                    // Actualizo la lista quitando el elemento
+                    listaComunidades = listaComunidades.minus(comunidadSeleccionada)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter?.notifyItemRemoved(item.groupId) binding.rvComunidades.adapter?.notifyItemRangeChanged(  item.groupId, listaComunidades.size)
+                    adapter.updateList(listaComunidades)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter = ComunidadAutonomaAdapter(listaComunidades) { onItemSelected(it) }
+                    comunidadDAO.borrarDeBBDD(this, comunidadSeleccionada.nombre)
+                }.create()
+        alert.show()
+    }
+
+    private fun editarComunidadAutonoma(posicion: Int) {
+       val miIntent = Intent(this, EditarActivity::class.java)
+        miIntent.putExtra("nombreComunidad", listaComunidades[posicion].nombre)
+        miIntent.putExtra("id",posicion)
+        miIntent.putExtra("imagen", listaComunidades[posicion].imagen)
+        intentLaunch.launch(miIntent)
+    }
+
+    private fun hacerFoto(posicion: Int) {
+        val miIntent = Intent(this, FotoActivity::class.java)
+        miIntent.putExtra("nombreComunidad", listaComunidades[posicion].nombre)
+        miIntent.putExtra("id", posicion)
+        miIntent.putExtra("imagen", listaComunidades[posicion].imagen)
+        intentLaunch.launch(miIntent)
+    }
+
+    private fun verFoto(posicion: Int) {
+        val miIntent = Intent(this, ImageActivity::class.java)
+        miIntent.putExtra("id", posicion)
+        intentLaunch.launch(miIntent)
+    }
+
+    private fun display(s: String) {
+        Snackbar.make(binding.root, s, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun limpiarListaComunidadesAutonomas() {
+        comunidadDAO.cambiarEstadoEliminado(this)
+        listaComunidades = comunidadDAO.cargarLista(this)
+        adapter.updateList(listaComunidades)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter?.notifyDataSetChanged() binding.rvComunidades.adapter = ComunidadAutonomaAdapter(listaComunidades) { onItemSelected(it) }
+
+    }
+
+    private fun recargarListaComunidadesAutonomas() {
+        comunidadDAO.cambiarEstadoVisible(this)
+        listaComunidades = comunidadDAO.cargarLista(this)
+        adapter.updateList(listaComunidades)//Si no fuera por el DiffUtil sería binding.rvComunidades.adapter?.notifyDataSetChanged() binding.rvComunidades.adapter = ComunidadAutonomaAdapter(listaComunidades) { onItemSelected(it) }
+    }
+
+    private fun logOut() {
+        val intent = Intent(this, LoginActivity::class.java)
+        // Limpio la pila de actividades y coloco la actividad de inicio de sesión en la parte superior
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 }
